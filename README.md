@@ -1,8 +1,8 @@
 # 🗂️ Folder Organizer
 
 ![Kotlin](https://img.shields.io/badge/language-kotlin-orange.svg)
-![License](https://img.shields.io/github/license/abhilashini/FolderOrganizer)
-![GitHub release](https://img.shields.io/github/v/release/abhilashini/FolderOrganizer)
+![License](https://img.shields.io/github/license/abhilashini/folder-organizer)
+![GitHub release](https://img.shields.io/github/v/release/abhilashini/folder-organizer)
 
 A simple Kotlin CLI tool that organizes files in a folder by extension.
 Supports `--dry-run`, `--undo`, and logs actions for safety.
