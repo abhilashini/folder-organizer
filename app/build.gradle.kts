@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    implementation(kotlin("stdlib"))
+
     // Use the Kotlin JUnit 5 integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
@@ -40,8 +42,24 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.example.AppKt"
+    mainClass.set("FolderOrganizerKt")
 }
+
+tasks.register<Jar>("fatJar") {
+    group = "build"
+    archiveFileName.set("FolderOrganizer-fat.jar")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Main-Class"] = "FolderOrganizerKt"
+    }
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
+    })
+}
+
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
