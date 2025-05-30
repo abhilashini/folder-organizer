@@ -1,36 +1,29 @@
 import java.io.File
+import organizer.CLI
+import organizer.OrganizerEngine
 
 fun main(args: Array<String>) {
-    if (args.isEmpty()) {
-        println("Usage: java -jar FolderOrganizer.jar <folder_path>")
+    if (args.isEmpty() || args.contains("--help")) {
+        CLI.showHelp()
         return
     }
 
-    var folder = File(args[0])
+    val folderPath = args.firstOrNull { !it.startsWith("--") }
+    if (folderPath == null) {
+        println("Please specify a folder path.")
+        CLI.showHelp()
+        return
+    }
+
+    val folder = File(folderPath)
     if (!folder.exists() || !folder.isDirectory) {
-        println("Provided path is not a valid directory.")
+        println("'$folderPath' is not a valid folder.")
         return
     }
 
-    val extensionToFolder = mapOf(
-        "pdf" to "Documents",
-        "docx" to "Documents",
-        "jpg" to "Images",
-        "png" to "Images",
-        "mp4" to "Videos",
-        "txt" to "Text",
-        "zip" to "Archives"
-    )
-
-    folder.listFiles()?.forEach { file -> 
-        if(file.isFile) {
-            val ext = file.extension.lowercase()
-            val targetFolder = File(folder, extensionToFolder[ext] ?: "Others")
-            targetFolder.mkdirs()
-            val moved = file.renameTo(File(targetFolder, file.name))
-            if (moved) println("Moved: ${file.name} → ${targetFolder.name}/")
-        }
+    when {
+        args.contains("--dry-run") -> OrganizerEngine.organize(folder, dryRun = true)
+        args.contains("--undo")    -> OrganizerEngine.undo(folder)
+        else                       -> OrganizerEngine.organize(folder)
     }
-
-    println("Done organizing '${folder.name}'")
 }

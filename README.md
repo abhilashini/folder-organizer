@@ -1,6 +1,11 @@
 # 🗂️ Folder Organizer
 
-A lightweight Kotlin-based CLI tool to organize messy folders (like Downloads, project dirs, etc.) by file type.
+![Kotlin](https://img.shields.io/badge/language-kotlin-orange.svg)
+![License](https://img.shields.io/github/license/abhilashini/FolderOrganizer)
+![GitHub release](https://img.shields.io/github/v/release/abhilashini/FolderOrganizer)
+
+A simple Kotlin CLI tool that organizes files in a folder by extension.
+Supports `--dry-run`, `--undo`, and logs actions for safety.
 
 ---
 
@@ -26,6 +31,16 @@ Grab the latest `.jar` from [Releases](https://github.com/abhilashini/FolderOrga
 ```bash
 java -jar FolderOrganizer-fat.jar /path/to/your/folder
 ```
+
+### ⚙️ 3. Options
+
+| Option      | Description                       |
+| ----------- | --------------------------------- |
+| (no args)   | Normal run                        |
+| `--dry-run` | Simulates organization, no moves  |
+| `--undo`    | Reverts the last organization run |
+| `--help`    | Shows usage instructions          |
+
 
 ## 🔧 Build from Source
 ```bash
